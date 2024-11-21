@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CurrentTimestamp;
 
 @Data
 @Entity
@@ -20,10 +21,15 @@ public class Task {
     private long id;
     private String title;
     private String content;
-    private String creationDate;
+    @CurrentTimestamp
     private String lastModifiedAt;
 
     public Task taskDtoToTask(TaskDto dto){
-        return new Task(0,dto.title(), dto.content(), dto.creationDate(), dto.lastModifiedAt());
+        Task task = new Task();
+
+        if(dto.lastModifiedAt().isEmpty())
+            task.setLastModifiedAt(dto.lastModifiedAt());
+
+        return new Task(0,dto.title(), dto.content(), dto.lastModifiedAt());
     }
 }
