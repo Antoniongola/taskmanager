@@ -26,7 +26,6 @@ public class Task {
 
     public Task taskDtoToTask(TaskDto dto){
         Task task = new Task();
-
         if(dto.lastModifiedAt().isEmpty())
             task.setLastModifiedAt(dto.lastModifiedAt());
 
